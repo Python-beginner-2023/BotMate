@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Chat App</title>
+  <style>
+    .chat-item {
+      margin-bottom: 10px;
+    }
+
+    .feedback {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Chat History</h1>
+  <div id="chat-history">
+    {% for message, feedback in chat_history %}
+    <div class="chat-item">
+      <div>😳 {{ message }}</div>
+      <div class="feedback">🖥️ {{ feedback }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <h2>Send a Message</h2>
+  <form action="{{ url_for('chat') }}" method="post"
+    onsubmit="event.preventDefault(); document.querySelector('input[type=submit]').disabled=true; this.submit();">
+    <input type="text" name="message" autofocus>
+    <input type="submit" value="Send">
+  </form>
+</body>
+
+</html>
