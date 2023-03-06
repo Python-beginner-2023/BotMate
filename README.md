@@ -2,7 +2,7 @@
 
 ## 前置
 
-pip install flask
+pip install flask    
 pip install openai
 
 export OPENAI_API_KEY="我给你们组的KEY"
