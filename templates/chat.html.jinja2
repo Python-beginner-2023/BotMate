@@ -72,6 +72,8 @@
       {% endfor %}
     </div>
 
+    <h5>机器生成的回答文本越长，提交问题后等待的时间也越长，请耐心等待</h5>
+
     <form action="{{ url_for('forget') }}" method="POST">
       <span>令牌数量 {{ current_token_count }}</span>
       &nbsp;
