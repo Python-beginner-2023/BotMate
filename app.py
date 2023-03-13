@@ -16,6 +16,12 @@ chat_history = []
 def index():
     return render_template("chat.html.jinja2", chat_history=chat_history)
 
+@app.route('/forget', methods=['POST'])
+def forget():
+    message_list = [{"role": "system", "content": "You are a helpful assistant."}]
+    chat_history = []
+    return render_template("chat.html.jinja2", chat_history=chat_history)
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
