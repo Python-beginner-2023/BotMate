@@ -1,10 +1,13 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+
 import os
 
 import openai
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
-openai.api_key = os.environ["OPENAI_API_KEY"]
 message_list = [{"role": "system", "content": "You are a helpful assistant."}]
 chat_history = []
 
@@ -16,6 +19,9 @@ def index():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    token = request.form["token"]
+    openai.api_key = token
+
     message = request.form["message"]
 
     message_list.append({"role": "user", "content": message})
@@ -27,7 +33,7 @@ def chat():
     )
 
     # 从 OpenAI API 的响应中提取回复内容
-    reply = completion.choices[0]['message']['content']
+    reply = completion.choices[0]['message']['content'] # type: ignore
 
     message_list.append({"role": "assistant", "content": reply})
 
