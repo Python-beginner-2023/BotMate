@@ -3,11 +3,11 @@
 
   <head>
     <meta charset="UTF-8">
-
-    <title>Chat App</title>
+    <title>Bot Mate</title>
     <style>
       .chat-item {
         margin-bottom: 10px;
+        padding: 5px;
       }
 
       .feedback {
@@ -19,66 +19,96 @@
         margin-bottom: 5px;
       }
 
-      input[type="text"], textarea {
+      input[type="text"],
+      textarea {
         display: block;
-        width: 52ch;
+        width: 120ch;
       }
 
-      /* Add the following styles to change the background color of the message textarea when the form is submitting. */
       #message.submitting {
-        background-color: #ccc;
+        background-color: #e6e4e4;
+      }
+
+      pre code.hljs {
+        display: block;
+        overflow-x: auto;
+        padding: 0.5em;
+        width: 120ch;
+        /* set width to 120 characters */
+        white-space: pre-wrap;
+        /* allow for wrapping within the code block */
+      }
+
+      /* modify the following styles to align the chat-history */
+      #chat-history {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .chat-item {
+        align-self: flex-start;
+        margin: 0;
       }
     </style>
+    <!-- Include highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
   </head>
 
   <body>
-    <h1>Chat History</h1>
-    <form action="{{ url_for('forget') }}" method="POST">
-      <input type="submit" value="删除记忆">
-    </form>
+    <h1>Bot Mate</h1>
 
     <div id="chat-history">
       {% for message, feedback in chat_history %}
       <div class="chat-item">
-        <div>😳 {{ message }}</div>
-        <div class="feedback">🖥️ {{ feedback }}</div>
+        <div>
+          <pre>😐: {{ message }}</pre>
+        </div>
+        <div>
+          <pre>🖥: <code class="hljs">{{ feedback }}</code></pre>
+        </div>
       </div>
       {% endfor %}
     </div>
-    <h2>Send a Message</h2>
+
+    <form action="{{ url_for('forget') }}" method="POST">
+      <span>令牌数量 {{ current_token_count }}</span>
+      &nbsp;
+      <input type="submit" value="删除记忆">
+    </form>
+
     <form id="chat-form" action="{{ url_for('chat') }}" method="post">
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="4"></textarea>
+      <label for="message">Message: [按 ENTER 键提交]</label>
+      <textarea id="message" name="message" rows="4" autofocus></textarea>
       <label for="token">Token:</label>
       <input type="text" id="token" name="token">
-      <input type="submit" value="Send" id="submit-button">
+      <input type="submit" value="提交" id="submit-button">
     </form>
     <script>
-      // Retrieve the saved token value from local storage and set it as the value of the token input.
       const savedToken = localStorage.getItem("token");
       if (savedToken) {
         document.getElementById("token").value = savedToken;
       }
 
-      // Handle form submission when Shift + Enter is pressed in the message textarea.
-      document.getElementById("message").addEventListener("keydown", function(event) {
-        if (event.shiftKey && event.keyCode === 13) {
+      document.getElementById("message").addEventListener("keydown", function (event) {
+        if (event.keyCode === 13) {
           event.preventDefault();
           document.getElementById("submit-button").disabled = true;
-          document.getElementById("message").classList.add("submitting"); // Add the "submitting" class to the message textarea.
+          document.getElementById("message").classList.add("submitting");
           document.getElementById("chat-form").submit();
         }
       });
 
-      // Save the token value to local storage whenever it changes.
-      document.getElementById("token").addEventListener("input", function(event) {
+      document.getElementById("token").addEventListener("input", function (event) {
         localStorage.setItem("token", event.target.value);
       });
 
-      // Add an event listener for the "submit" event of the form.
-      document.getElementById("chat-form").addEventListener("submit", function() {
-        document.getElementById("message").classList.remove("submitting"); // Remove the "submitting" class from the message textarea.
+      document.getElementById("chat-form").addEventListener("submit", function () {
+        document.getElementById("message").classList.remove("submitting");
       });
+
+      hljs.highlightAll();
     </script>
   </body>
 
