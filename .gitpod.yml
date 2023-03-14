@@ -1,3 +1,4 @@
+
 image: gitpod/workspace-full-vnc
 
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
@@ -11,3 +12,9 @@ ports:
     description: Port 3000 for the frontend
     port: 3000
     onOpen: open-preview
+vscode:
+  extensions:
+    - samuelcolvin.jinjahtml
+    - ms-python.black-formatter
+    - ms-python.isort
+    - ms-python.python
