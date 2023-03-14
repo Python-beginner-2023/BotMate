@@ -2,6 +2,4 @@
 
 ## 运行
 
-[点击运行](https://gitpod.io/#https://github.com/Python-beginner-2023/BotMate)
-
-当完全启动后，打开5000端口的映射，填入 api token即可使用
+关闭弹出窗口拦截，然后等着弹出窗口打开即可使用。如果手动设置了关闭弹出窗口拦截那么久刷新一下页面即可
