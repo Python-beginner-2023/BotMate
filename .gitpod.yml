@@ -8,10 +8,10 @@ tasks:
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
-  - name: Frontend
-    description: Port 3000 for the frontend
-    port: 3000
-    onOpen: open-preview
+  - name: flask
+    description: Port 5000 for the flask
+    port: 5000
+    onOpen: open-browser
 vscode:
   extensions:
     - samuelcolvin.jinjahtml
