@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import openai
+import markdown
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
@@ -53,6 +54,9 @@ def chat():
     reply = completion.choices[0]['message']['content']  # type: ignore
 
     message_list.append({"role": "assistant", "content": reply})
+
+    # 将回复结果 Markdown 处理
+    reply = markdown.markdown(reply)
 
     # 将回复添加到聊天历史中
     chat_history.append((message, reply))
