@@ -13,24 +13,25 @@ current_token_count = 0
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("chat.html.jinja2", chat_history=chat_history, current_token_count=current_token_count)
+    return render_template(
+        "chat.html.jinja2",
+        chat_history=chat_history,
+        current_token_count=current_token_count,
+    )
 
 
-@app.route('/forget', methods=['POST'])
+@app.route("/forget", methods=["POST"])
 def forget():
     global message_list
     global chat_history
     global current_token_count
 
     message_list.clear()
-    message_list.append({
-        "role": "system",
-        "content": "You are a helpful assistant."
-    })
+    message_list.append({"role": "system", "content": "You are a helpful assistant."})
     chat_history.clear()
 
     current_token_count = 0
-    
+
     return redirect(url_for("index"))
 
 
@@ -50,7 +51,7 @@ def chat():
     )
 
     # 从 OpenAI API 的响应中提取回复内容
-    reply = completion.choices[0]['message']['content']  # type: ignore
+    reply = completion.choices[0]["message"]["content"]  # type: ignore
 
     message_list.append({"role": "assistant", "content": reply})
 
@@ -58,10 +59,11 @@ def chat():
     chat_history.append((message, reply))
 
     global current_token_count
-    current_token_count = completion['usage']['total_tokens']
+    current_token_count = completion["usage"]["total_tokens"]
 
     return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
+
     app.run(debug=True)
